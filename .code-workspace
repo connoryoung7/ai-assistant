@@ -1,0 +1,6 @@
+"settings": {
+   "python.analysis.extraPaths": [
+      "./app",
+      "./playground"
+   ]
+}
