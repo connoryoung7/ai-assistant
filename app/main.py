@@ -24,6 +24,7 @@ app = FastAPI()
 # Set up Jinja2 templates
 templates = Jinja2Templates(directory="templates")
 
+WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "").encode("utf8")
 
 # Read and insert webhook data
 @app.api_route("/events", methods=["GET", "POST"])
@@ -44,7 +45,7 @@ async def webhook(
     body = await request.body()
     is_genuine = verify_signature(
         message=body,
-        key=os.environ.get("WEBHOOK_SECRET", "").encode("utf8"),
+        key=WEBHOOK_SECRET,
         signature=x_nylas_signature,
     )
     if not is_genuine:
